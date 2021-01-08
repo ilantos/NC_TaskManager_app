@@ -26,18 +26,14 @@ package ua.edu.sumdu.ilchenko.tasks.controller;
 
 import org.apache.log4j.Logger;
 import ua.edu.sumdu.ilchenko.tasks.model.AbstractTaskList;
-import ua.edu.sumdu.ilchenko.tasks.view.CreateTaskView;
+import ua.edu.sumdu.ilchenko.tasks.model.Task;
 import ua.edu.sumdu.ilchenko.tasks.view.IView;
-import ua.edu.sumdu.ilchenko.tasks.view.RemoveTaskView;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class TaskListController implements IController {
+public class RemoveTaskController implements IController {
     /**
      * Logger.
      */
-    private static Logger logger = Logger.getLogger(TaskListController.class);
+    private static Logger logger = Logger.getLogger(RemoveTaskController.class);
 
     /**
      * List of tasks.
@@ -45,35 +41,18 @@ public class TaskListController implements IController {
     private AbstractTaskList taskList;
 
     /**
-     * Available actions with tasks view.
+     * View for creating task.
      */
-    private IView actionsWithTaskView;
-
-    /**
-     * task list view.
-     */
-    private IView taskListView;
-
-    /**
-     * Possible using controllers from this controller
-     */
-    private Map<Integer, IController> controllers = new HashMap<>();
+    private IView removeTaskView;
 
     /**
      * Ctor.
-     * <p></p>
-     * @param taskList list of tasks
-     * @param actionsWithTaskView available actions with tasks
-     * @param taskListView view for tasks
+     * @param taskList from this task list will be removing a task
+     * @param removeTaskView view
      */
-    public TaskListController(AbstractTaskList taskList, IView actionsWithTaskView, IView taskListView) {
-        logger.info("Creating controller ...");
+    public RemoveTaskController(AbstractTaskList taskList, IView removeTaskView) {
         this.taskList = taskList;
-        this.actionsWithTaskView = actionsWithTaskView;
-        this.taskListView = taskListView;
-
-        controllers.put(1, new CreateTaskController(taskList, new CreateTaskView()));
-        controllers.put(2, new RemoveTaskController(taskList, new RemoveTaskView(taskListView)));
+        this.removeTaskView = removeTaskView;
     }
 
     /**
@@ -82,18 +61,22 @@ public class TaskListController implements IController {
     @Override
     public void run() {
         logger.info("Running controller ...");
+        int action;
         for ( ; ; ) {
-            taskListView.printInfo();
-            int action = actionsWithTaskView.printInfo();
+            action = removeTaskView.printInfo();
             if (action == -1) {
-                logger.info("Quitting from the controller ...");
+                logger.info("Quit from the controller");
                 break;
             }
-            if (controllers.containsKey(action)) {
-                controllers.get(action).run();
+            if (action > 0 && action <= taskList.size()) {
+                int i = 1;
+                for (Task task: taskList) {
+                    if (action == i++) {
+                        taskList.remove(task);
+                    }
+                }
             } else {
-                //Нужно ли выводить эти данные в контроллере? Или это во вью нужно выводить?
-                System.out.println("You entered not existing activity");
+                System.out.println("You chose an incorrect number of task");
                 logger.warn("Entered not existing activity");
             }
         }

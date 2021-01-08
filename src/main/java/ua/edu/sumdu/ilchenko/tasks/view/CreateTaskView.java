@@ -50,10 +50,14 @@ public class CreateTaskView implements IView {
      */
     @Override
     public int printInfo() {
-        System.out.println("Choose type of task:");
-        System.out.println("1 | unrepeated task");
-        System.out.println("2 | repeated task");
-        System.out.println("3 | cancel");
+        System.out.println();
+        System.out.println("-----------------");
+        System.out.println("|  Adding task  |");
+        System.out.println("-----------------");
+        System.out.println("Choose type of adding task:");
+        System.out.println(" 1 | unrepeated task");
+        System.out.println(" 2 | repeated task");
+        System.out.println("-1 | cancel");
 
         int action = 0;
         for ( ; ; ) {

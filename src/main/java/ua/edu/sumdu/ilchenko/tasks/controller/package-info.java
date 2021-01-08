@@ -22,41 +22,12 @@
  * SOFTWARE.
  */
 
-package ua.edu.sumdu.ilchenko.tasks.view;
-
-import org.apache.log4j.Logger;
-import ua.edu.sumdu.ilchenko.tasks.model.Task;
-
-public class TaskListView implements IView {
-    /**
-     * Logger.
-     */
-    private static Logger logger = Logger.getLogger(TaskListView.class);
-
-    /**
-     * Iterable of tasks.
-     */
-    private Iterable<Task> tasks;
-
-    /**
-     * Ctor.
-     * @param tasks iterable of tasks
-     */
-    public TaskListView(Iterable<Task> tasks) {
-        this.tasks = tasks;
-    }
-
-    /**
-     * Print to console list of tasks.
-     * @return in anyway 0
-     */
-    @Override
-    public int printInfo() {
-        System.out.println("Tasks:");
-        int i = 1;
-        for (Task task: tasks) {
-            System.out.println(i++ + ". " + task);
-        }
-        return 0;
-    }
-}
+/**
+ * One of three parts of MVC pattern.
+ * Classes for:
+ * <li>
+ *     <ol>controlling showing views to user</ol>
+ *     <ol>processing user answers from views</ol>
+ * </li>
+ */
+package ua.edu.sumdu.ilchenko.tasks.controller;

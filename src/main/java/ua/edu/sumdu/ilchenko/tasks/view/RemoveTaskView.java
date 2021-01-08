@@ -30,11 +30,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class MenuView implements IView {
+public class RemoveTaskView implements IView {
     /**
      * Logger.
      */
-    private static Logger logger = Logger.getLogger(MenuView.class);
+    private static Logger logger = Logger.getLogger(RemoveTaskView.class);
 
     /**
      * Console reader.
@@ -42,24 +42,36 @@ public class MenuView implements IView {
     private BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
     /**
-     * Print to console some information.
+     * View for show all tasks.
+     */
+    private IView taskListView;
+
+    /**
+     * Ctor.
+     * @param taskListView view of tasks
+     */
+    public RemoveTaskView(IView taskListView) {
+        this.taskListView = taskListView;
+    }
+
+    /**
+     * Print to console info about removing and available tasks for removing.
      * @return action that user performed
      */
     @Override
     public int printInfo() {
         System.out.println();
         System.out.println("-----------------");
-        System.out.println("|   Main menu   |");
+        System.out.println("| Removing task |");
         System.out.println("-----------------");
-        System.out.println("Available activities:");
-        System.out.println("1 | Add a new task");
-        System.out.println("2 | Show all tasks");
-        System.out.println("3 | Calendar. Show tasks with specific interval");
-        System.out.println("9 | Quit");
+        System.out.println(" n | n - number of a task for removing");
+        System.out.println("-1 | back");
+        taskListView.printInfo();
 
         int action = 0;
         for ( ; ; ) {
-            System.out.println("--- Choose activity (Enter number of activity) ---");
+            logger.info("Reading the action ...");
+            System.out.println("--- Enter a number of task for removing ---");
             try {
                 action = Integer.parseInt(in.readLine());
                 break;
@@ -67,7 +79,7 @@ public class MenuView implements IView {
                 logger.warn("Entered number is a string", e);
                 System.out.println("You entered not a number");
             } catch (IOException e) {
-                logger.error("Cannot read from console", e);
+                logger.warn("Cannot read from console", e);
                 System.out.println("Cannot read your info :(");
             }
         }

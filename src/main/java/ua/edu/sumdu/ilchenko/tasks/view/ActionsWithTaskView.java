@@ -48,10 +48,10 @@ public class ActionsWithTaskView implements IView {
     @Override
     public int printInfo() {
         System.out.println("Available actions with task:");
-        System.out.println("1 | add a new task");
-        System.out.println("2 | remove one of tasks");
-        System.out.println("3 | edit one of tasks");
-        System.out.println("8 | back");
+        System.out.println(" 1 | add a new task");
+        System.out.println(" 2 | remove one of tasks");
+        System.out.println(" 3 | edit one of tasks");
+        System.out.println("-1 | back");
         int action;
         for ( ; ; ) {
             System.out.println("--- Choose activity (Enter number of activity) ---");

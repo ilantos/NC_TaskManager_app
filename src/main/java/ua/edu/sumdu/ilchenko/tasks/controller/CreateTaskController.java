@@ -66,8 +66,8 @@ public class CreateTaskController implements IController{
         for ( ; ; ) {
             Task task = null;
             action = createTaskView.printInfo();
-            if (action == 3) {
-                logger.info("Quitting from the controller ...");
+            if (action == -1) {
+                logger.info("Quit from the controller");
                 break;
             }
             switch (action) {
