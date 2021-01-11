@@ -27,6 +27,9 @@ package ua.edu.sumdu.ilchenko.tasks.view;
 import org.apache.log4j.Logger;
 import ua.edu.sumdu.ilchenko.tasks.model.Task;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class TaskListView implements IView {
     /**
      * Logger.
@@ -55,8 +58,44 @@ public class TaskListView implements IView {
         System.out.println("Tasks:");
         int i = 1;
         for (Task task: tasks) {
-            System.out.println(i++ + ". " + task);
+            System.out.println(i++ + " | " + formatTask(task));
         }
         return 0;
+    }
+
+    private String formatTask(Task task) {
+        StringBuilder formattedTask = new StringBuilder();
+        formattedTask.append(task.getTitle());
+        formattedTask.append(" | ");
+
+        //Adding active status to str
+        String active = "not active";
+        if (task.isActive()) {
+            active = "active";
+        }
+        formattedTask.append(active);
+        formattedTask.append(" | ");
+
+        //Adding repeated status and times of the task
+        if (task.isRepeated()) {
+            formattedTask.append("(repeated) ");
+            formattedTask.append("start time: ");
+            formattedTask.append(formatDate(task.getStartTime()));
+            formattedTask.append(", end time: ");
+            formattedTask.append(formatDate(task.getEndTime()));
+            formattedTask.append(", interval: ");
+            formattedTask.append(task.getRepeatInterval());
+        }else {
+            formattedTask.append("(non-repeated) ");
+            formattedTask.append("time: ");
+            formattedTask.append(formatDate(task.getTime()));
+        }
+
+        return formattedTask.toString();
+    }
+
+    private String formatDate(LocalDateTime time) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return time.format(formatter);
     }
 }
