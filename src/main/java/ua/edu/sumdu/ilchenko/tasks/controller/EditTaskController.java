@@ -27,13 +27,13 @@ package ua.edu.sumdu.ilchenko.tasks.controller;
 import org.apache.log4j.Logger;
 import ua.edu.sumdu.ilchenko.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.ilchenko.tasks.model.Task;
-import ua.edu.sumdu.ilchenko.tasks.view.IView;
+import ua.edu.sumdu.ilchenko.tasks.view.EditTaskView;
 
-public class RemoveTaskController implements IController {
+public class EditTaskController implements IController {
     /**
      * Logger.
      */
-    private static Logger logger = Logger.getLogger(RemoveTaskController.class);
+    private static Logger logger = Logger.getLogger(EditTaskController.class);
 
     /**
      * List of tasks.
@@ -43,16 +43,16 @@ public class RemoveTaskController implements IController {
     /**
      * View for creating task.
      */
-    private IView removeTaskView;
+    private EditTaskView editTaskView;
 
     /**
      * Ctor.
-     * @param taskList from this task list will be removing a task
-     * @param removeTaskView view
+     * @param taskList list of tasks
+     * @param editTaskView view for editing the task
      */
-    public RemoveTaskController(AbstractTaskList taskList, IView removeTaskView) {
+    public EditTaskController(AbstractTaskList taskList, EditTaskView editTaskView) {
         this.taskList = taskList;
-        this.removeTaskView = removeTaskView;
+        this.editTaskView = editTaskView;
     }
 
     /**
@@ -60,19 +60,18 @@ public class RemoveTaskController implements IController {
      */
     @Override
     public void run() {
-        logger.info("Running controller ...");
-        int action;
         for ( ; ; ) {
-            action = removeTaskView.printInfo();
-            if (action == -1) {
+            int actionMenu = editTaskView.printInfo();
+            if (actionMenu == -1) {
                 logger.info("Quit from the controller");
                 break;
             }
-            if (action > 0 && action <= taskList.size()) {
+            if (actionMenu > 0 && actionMenu <= taskList.size()) {
                 int i = 1;
                 for (Task task: taskList) {
-                    if (action == i++) {
-                        taskList.remove(task);
+                    if (actionMenu == i++) {
+                        int action = editTaskView.printInfoChooseEditing();
+                        doEditing(task, action);
                         break;
                     }
                 }
@@ -80,6 +79,28 @@ public class RemoveTaskController implements IController {
                 System.out.println("You chose an incorrect number of task");
                 logger.warn("Entered not existing activity");
             }
+        }
+    }
+
+    /**
+     * Do editing the task.
+     * @param task task for editing
+     * @param action specified part of task for editing
+     */
+    private void doEditing(Task task, int action) {
+        switch (action) {
+            case 1:
+                editTaskView.editTitle(task);
+                break;
+            case 2:
+                editTaskView.editTime(task);
+                break;
+            case 3:
+                editTaskView.editActive(task);
+                break;
+            default:
+                System.out.println("You chose an incorrect activity");
+                logger.warn("Entered not existing activity");
         }
     }
 }

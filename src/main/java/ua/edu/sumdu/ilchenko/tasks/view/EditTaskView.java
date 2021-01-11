@@ -33,11 +33,11 @@ import java.io.InputStreamReader;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 
-public class CreateTaskView implements IView {
+public class EditTaskView implements IView {
     /**
      * Logger.
      */
-    private static Logger logger = Logger.getLogger(CreateTaskView.class);
+    private static Logger logger = Logger.getLogger(EditTaskView.class);
 
     /**
      * Console reader.
@@ -45,20 +45,47 @@ public class CreateTaskView implements IView {
     private BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
     /**
-     * Print to console types of creating task.
+     * View for show all tasks.
+     */
+    private IView taskListView;
+
+    /**
+     * Ctor.
+     * @param taskListView view of the task list
+     */
+    public EditTaskView(IView taskListView) {
+        this.taskListView = taskListView;
+    }
+
+    /**
+     * Print to console available actions and tasks.
      * @return action that user performed
      */
     @Override
     public int printInfo() {
-        System.out.println();
         System.out.println("-----------------");
-        System.out.println("|  Adding task  |");
+        System.out.println("| Editing task  |");
         System.out.println("-----------------");
-        System.out.println("Choose type of adding task:");
-        System.out.println(" 1 | unrepeated task");
-        System.out.println(" 2 | repeated task");
-        System.out.println("-1 | cancel");
+        System.out.println(" n | n - number of a task for removing");
+        System.out.println("-1 | back");
+        taskListView.printInfo();
+        return readAction();
+    }
 
+    /**
+     * Print info about available editing for the task.
+     * @return entered action
+     */
+    public int printInfoChooseEditing() {
+        System.out.println("Available options to edit a task");
+        System.out.println(" 1 | Edit title");
+        System.out.println(" 2 | Edit time");
+        System.out.println(" 3 | Edit active");
+        System.out.println("-1 | back");
+        return readAction();
+    }
+
+    private int readAction() {
         int action = 0;
         for ( ; ; ) {
             logger.info("Reading the action ...");
@@ -78,57 +105,89 @@ public class CreateTaskView implements IView {
     }
 
     /**
-     * Get from console a repeated task.
-     * @return entered correct task or null
+     * Edit title of the task.
+     * @param task editing task
      */
-    public Task getRepeatedTask() {
-        logger.info("Getting a repeated task from user...");
+    public void editTitle(Task task) {
         try {
             System.out.println("Enter the title of task");
             String title = in.readLine();
-            System.out.println("Entering start date of repeated task...");
-            LocalDateTime startTime = getDateFromUser();
-            System.out.println("Entering end date of repeated task...");
-            LocalDateTime endTime = getDateFromUser();
-            System.out.println("Enter interval of execution of repeated task");
-            int interval = Integer.parseInt(in.readLine());
-            return new Task(title, startTime, endTime, interval);
-        } catch (NumberFormatException e) {
-            logger.warn("Entered number is a string", e);
-            System.out.println("You entered not a number");
-        } catch (IllegalArgumentException e) {
-            logger.warn(e.getMessage(), e);
-            System.out.println(e.getMessage());
+            task.setTitle(title);
+            System.out.println("Task successfully changed!");
+            logger.info("Task changed");
         } catch (IOException e) {
             logger.error("Cannot read from console", e);
             System.out.println("Cannot read your info :(");
         }
-        return null;
     }
 
     /**
-     * Get from console a non-repeated task.
-     * @return entered correct task or null
+     * Edit time of the task.
+     * @param task editing task
      */
-    public Task getNonRepeatedTask() {
-        logger.info("Getting a non-repeated task from user...");
-        try {
-            System.out.println("Enter the title of task");
-            String title = in.readLine();
-            System.out.println("Entering date of execution...");
+    public void editTime(Task task) {
+        logger.info("Editing a repeated task...");
+        if (task.isRepeated()) {
+            System.out.println("Set start time of interval");
+            LocalDateTime start = getDateFromUser();
+            if (start == null) {
+                System.out.println("The task isn't changed!");
+                return;
+            }
+            System.out.println("Set end time of interval");
+            LocalDateTime end = getDateFromUser();
+            if (end == null) {
+                System.out.println("The task isn't changed!");
+                return;
+            }
+            try {
+                System.out.println("Set interval");
+                int interval = Integer.parseInt(in.readLine());
+                task.setTime(start, end, interval);
+                System.out.println("Task successfully changed!");
+                logger.info("Task changed");
+            } catch (NumberFormatException e) {
+                logger.warn("Entered number is a string", e);
+                System.out.println("You entered not a number");
+                System.out.println("The task isn't changed!");
+            } catch (IOException e) {
+                logger.error("Cannot read from console", e);
+                System.out.println("Cannot read your info :(");
+            }
+        } else {
+            logger.info("Editing a non-repeated task...");
+            System.out.println("Set execution time");
             LocalDateTime executionTime = getDateFromUser();
-            return new Task(title, executionTime);
-        } catch (NumberFormatException e) {
-            logger.warn("Entered number is a string", e);
-            System.out.println("You entered not a number");
-        } catch (IllegalArgumentException e) {
-            logger.warn(e.getMessage(), e);
-            System.out.println(e.getMessage());
+            if (executionTime != null) {
+                task.setTime(executionTime);
+                System.out.println("Task successfully changed!");
+                logger.info("Task changed");
+            } else {
+                System.out.println("The task isn't changed");
+            }
+        }
+    }
+
+    /**
+     * Edit active status of the task.
+     * @param task editing task
+     */
+    public void editActive(Task task) {
+        System.out.println("Actual status of task active is "
+                + task.isActive());
+        System.out.println("If you want to change status write \"yes\"");
+        try {
+            String answer = in.readLine();
+            if (answer.equals("yes")) {
+                task.setActive(!task.isActive());
+                System.out.println("Active status is changed successfully!");
+            } else {
+                System.out.println("Active status isn't changed");
+            }
         } catch (IOException e) {
             logger.error("Cannot read from console", e);
             System.out.println("Cannot read your info :(");
         }
-        return null;
     }
 
     /**
