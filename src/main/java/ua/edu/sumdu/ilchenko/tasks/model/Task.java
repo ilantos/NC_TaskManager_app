@@ -76,7 +76,7 @@ public class Task implements Cloneable, Serializable {
         this.start = time;
         this.end = time;
         this.interval = 0;
-        this.active = false;
+        this.active = true;
     }
 
     /**Ctor. for an inactive and repeated task.
@@ -102,7 +102,7 @@ public class Task implements Cloneable, Serializable {
         this.start = start;
         this.end = end;
         this.interval = interval;
-        this.active = false;
+        this.active = true;
     }
 
     /**
