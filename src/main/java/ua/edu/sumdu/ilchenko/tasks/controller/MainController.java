@@ -26,10 +26,7 @@ package ua.edu.sumdu.ilchenko.tasks.controller;
 
 import org.apache.log4j.Logger;
 import ua.edu.sumdu.ilchenko.tasks.model.AbstractTaskList;
-import ua.edu.sumdu.ilchenko.tasks.view.ActionsWithTaskView;
-import ua.edu.sumdu.ilchenko.tasks.view.CreateTaskView;
-import ua.edu.sumdu.ilchenko.tasks.view.IView;
-import ua.edu.sumdu.ilchenko.tasks.view.TaskListView;
+import ua.edu.sumdu.ilchenko.tasks.view.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,6 +67,7 @@ public class MainController implements IController{
                 new TaskListController(taskList,
                     new ActionsWithTaskView(),
                     new TaskListView(taskList)));
+        controllers.put(3, new CalendarController(taskList, new CalendarView()));
     }
 
     /**
