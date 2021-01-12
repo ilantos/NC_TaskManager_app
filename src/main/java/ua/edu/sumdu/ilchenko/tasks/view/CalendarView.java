@@ -52,6 +52,7 @@ public class CalendarView implements IView{
      */
     @Override
     public int printInfo() {
+        logger.info("Showing menu of intervals for calendar");
         System.out.println("Available intervals for calendar:");
         System.out.println(" 1 | tomorrow");
         System.out.println(" 2 | next 7 days");

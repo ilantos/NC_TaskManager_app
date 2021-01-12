@@ -24,6 +24,8 @@
 
 package ua.edu.sumdu.ilchenko.tasks.model;
 
+import org.apache.log4j.Logger;
+
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -31,6 +33,11 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 public class LinkedTaskList extends AbstractTaskList implements Iterable<Task>, Cloneable, Serializable {
+    /**
+     * Logger.
+     */
+    private static Logger logger = Logger.getLogger(LinkedTaskList.class);
+
     /**
      * Serialization marker.
      */
@@ -100,6 +107,7 @@ public class LinkedTaskList extends AbstractTaskList implements Iterable<Task>, 
     public LinkedTaskList() {
         listType = ListTypes.types.LINKED;
         numTasks = 0;
+        logger.info("Initial linked list is created");
     }
 
     /**
@@ -117,6 +125,7 @@ public class LinkedTaskList extends AbstractTaskList implements Iterable<Task>, 
     @Override
     public void add(Task task) {
         if (task == null) {
+            logger.warn("Task didn't add");
             throw new IllegalArgumentException("Task cannot be null");
         }
         if (numTasks == 0) {
@@ -128,6 +137,7 @@ public class LinkedTaskList extends AbstractTaskList implements Iterable<Task>, 
             lastNode = newNode;
         }
         numTasks++;
+        logger.info("Task is added to list");
     }
 
     @Override
@@ -152,11 +162,13 @@ public class LinkedTaskList extends AbstractTaskList implements Iterable<Task>, 
                     }
                 }
                 numTasks--;
+                logger.info("Task is removed from list");
                 return true;
             }
             prev = current;
             current = current.next;
         }
+        logger.warn("Task isn't removed from list");
         return false;
     }
 

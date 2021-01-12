@@ -60,6 +60,7 @@ public class RemoveTaskView implements IView {
      */
     @Override
     public int printInfo() {
+        logger.info("Showing menu for removing task");
         System.out.println();
         System.out.println("-----------------");
         System.out.println("| Removing task |");
@@ -70,7 +71,6 @@ public class RemoveTaskView implements IView {
 
         int action = 0;
         for ( ; ; ) {
-            logger.info("Reading the action ...");
             System.out.println("--- Enter a number of task for removing ---");
             try {
                 action = Integer.parseInt(in.readLine());
@@ -79,7 +79,7 @@ public class RemoveTaskView implements IView {
                 logger.warn("Entered number is a string", e);
                 System.out.println("You entered not a number");
             } catch (IOException e) {
-                logger.warn("Cannot read from console", e);
+                logger.error("Cannot read from console", e);
                 System.out.println("Cannot read your info :(");
             }
         }

@@ -63,6 +63,7 @@ public class EditTaskView implements IView {
      */
     @Override
     public int printInfo() {
+        logger.info("Showing menu for editing task");
         System.out.println("-----------------");
         System.out.println("| Editing task  |");
         System.out.println("-----------------");
@@ -114,7 +115,6 @@ public class EditTaskView implements IView {
             String title = in.readLine();
             task.setTitle(title);
             System.out.println("Task successfully changed!");
-            logger.info("Task changed");
         } catch (IOException e) {
             logger.error("Cannot read from console", e);
             System.out.println("Cannot read your info :(");
@@ -126,7 +126,7 @@ public class EditTaskView implements IView {
      * @param task editing task
      */
     public void editTime(Task task) {
-        logger.info("Editing a repeated task...");
+        logger.info("Setting time...");
         if (task.isRepeated()) {
             System.out.println("Set start time of interval");
             LocalDateTime start = getDateFromUser();
@@ -145,7 +145,6 @@ public class EditTaskView implements IView {
                 int interval = Integer.parseInt(in.readLine());
                 task.setTime(start, end, interval);
                 System.out.println("Task successfully changed!");
-                logger.info("Task changed");
             } catch (NumberFormatException e) {
                 logger.warn("Entered number is a string", e);
                 System.out.println("You entered not a number");
@@ -155,15 +154,14 @@ public class EditTaskView implements IView {
                 System.out.println("Cannot read your info :(");
             }
         } else {
-            logger.info("Editing a non-repeated task...");
             System.out.println("Set execution time");
             LocalDateTime executionTime = getDateFromUser();
             if (executionTime != null) {
                 task.setTime(executionTime);
                 System.out.println("Task successfully changed!");
-                logger.info("Task changed");
             } else {
                 System.out.println("The task isn't changed");
+                logger.info("Time isn't changed");
             }
         }
     }
@@ -195,7 +193,7 @@ public class EditTaskView implements IView {
      * @return entered correct date or null
      */
     private LocalDateTime getDateFromUser() {
-        logger.info("Getting a new date from user...");
+        logger.debug("Getting a new date from user...");
         LocalDateTime time = null;
         try {
             System.out.println("Enter a number of the year");

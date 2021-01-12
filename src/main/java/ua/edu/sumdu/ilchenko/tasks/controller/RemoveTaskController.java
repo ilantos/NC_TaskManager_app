@@ -60,18 +60,17 @@ public class RemoveTaskController implements IController {
      */
     @Override
     public void run() {
-        logger.info("Running controller ...");
         int action;
         for ( ; ; ) {
             action = removeTaskView.printInfo();
             if (action == -1) {
-                logger.info("Quit from the controller");
                 break;
             }
             if (action > 0 && action <= taskList.size()) {
                 int i = 1;
                 for (Task task: taskList) {
                     if (action == i++) {
+                        logger.info("Task for removing:" + task.toString());
                         taskList.remove(task);
                         break;
                     }

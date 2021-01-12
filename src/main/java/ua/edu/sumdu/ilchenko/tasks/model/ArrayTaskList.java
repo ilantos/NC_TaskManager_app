@@ -24,12 +24,18 @@
 
 package ua.edu.sumdu.ilchenko.tasks.model;
 
+import org.apache.log4j.Logger;
+
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.stream.Stream;
 
 public class ArrayTaskList extends AbstractTaskList implements Iterable<Task>, Cloneable, Serializable {
+    /**
+     * Logger.
+     */
+    private static Logger logger = Logger.getLogger(ArrayTaskList.class);
 
     /**
      * Serialization marker.
@@ -52,6 +58,7 @@ public class ArrayTaskList extends AbstractTaskList implements Iterable<Task>, C
     public ArrayTaskList() {
         listType = ListTypes.types.ARRAY;
         tasks = new Task[10];
+        logger.info("Initial array list is created");
     }
 
     /**
@@ -71,6 +78,7 @@ public class ArrayTaskList extends AbstractTaskList implements Iterable<Task>, C
      */
     public void add(Task task) {
         if (task == null) {
+            logger.warn("Task didn't add");
             throw new IllegalArgumentException("Task cannot be null");
         }
         if (numTasks == tasks.length) {
@@ -80,6 +88,7 @@ public class ArrayTaskList extends AbstractTaskList implements Iterable<Task>, C
                 lengthNewArray = Integer.MAX_VALUE;
             }
             if (numTasks == Integer.MAX_VALUE) {
+                logger.warn("Task didn't add");
                 throw new ArrayIndexOutOfBoundsException(
                         "Too many tasks on the list. Create new list");
             }
@@ -90,6 +99,7 @@ public class ArrayTaskList extends AbstractTaskList implements Iterable<Task>, C
         }
         tasks[numTasks] = task;
         numTasks++;
+        logger.info("Task is added to list");
     }
 
     /**
@@ -107,9 +117,11 @@ public class ArrayTaskList extends AbstractTaskList implements Iterable<Task>, C
                 }
                 tasks = newArray;
                 numTasks--;
+                logger.info("Task is removed from list");
                 return true;
             }
         }
+        logger.warn("Task isn't removed from list");
         return false;
     }
 

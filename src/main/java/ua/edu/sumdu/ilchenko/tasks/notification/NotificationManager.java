@@ -58,6 +58,7 @@ public class NotificationManager extends Thread{
     public NotificationManager(AbstractTaskList taskList, INotification notificator) {
         this.taskList = taskList;
         this.notificator = notificator;
+        logger.info("Notification manager is created");
     }
 
     /**
@@ -66,19 +67,19 @@ public class NotificationManager extends Thread{
     @Override
     public void run() {
         while (true) {
-            logger.info("notification working...");
+            logger.info("Notification checking is working...");
             int requiredDelta = 60;
             LocalDateTime now = LocalDateTime.now();
             Set<Task> tasksToNotify = new HashSet<>();
             for (Task task: taskList) {
                 LocalDateTime nextTime = task.nextTimeAfter(now);
                 if (nextTime == null) {
-                    logger.debug("Not checking for notify: " + task.toString());
+                    logger.trace("Not checking for notify: " + task.toString());
                     continue;
                 }
                 long delta = task.nextTimeAfter(now).toEpochSecond(ZoneOffset.UTC)
                         - now.toEpochSecond(ZoneOffset.UTC);
-                logger.debug(task.getTitle() + ": seconds to notify = " + delta);
+                logger.trace(task.getTitle() + ": seconds to notify = " + delta);
                 if (task.isActive() && Math.abs(delta) <= requiredDelta) {
                     tasksToNotify.add(task);
                 }
@@ -90,7 +91,7 @@ public class NotificationManager extends Thread{
             try {
                 Thread.sleep(1000 * 60);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                logger.error("Cannot to sleep thread", e);
             }
         }
     }

@@ -47,6 +47,7 @@ public class MenuView implements IView {
      */
     @Override
     public int printInfo() {
+        logger.info("Showing main menu of task manager");
         System.out.println();
         System.out.println("-----------------");
         System.out.println("|   Main menu   |");
@@ -55,7 +56,7 @@ public class MenuView implements IView {
         System.out.println("1 | Add a new task");
         System.out.println("2 | Show all tasks");
         System.out.println("3 | Calendar. Show tasks with specific interval");
-        System.out.println("9 | Quit");
+        System.out.println("-1 | Quit");
 
         int action = 0;
         for ( ; ; ) {

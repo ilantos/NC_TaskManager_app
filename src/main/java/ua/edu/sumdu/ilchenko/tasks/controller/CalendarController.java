@@ -67,22 +67,23 @@ public class CalendarController implements IController{
      */
     @Override
     public void run() {
-        logger.info("Running controller ...");
         int action;
         for ( ; ; ) {
             action = calendarView.printInfo();
             if (action == -1) {
-                logger.info("Quit from the controller");
                 break;
             }
             switch (action) {
                 case 1:
+                    logger.info("Showing tomorrow task");
                     calendarView.printCalendar(getTomorrowTasks());
                     break;
                 case 2:
+                    logger.info("Showing tasks for next 7 days");
                     calendarView.printCalendar(getNextDaysTasks(7));
                     break;
                 case 3:
+                    logger.info("Showing tasks for this month");
                     calendarView.printCalendar(getMonthTasks());
                     break;
                 default:

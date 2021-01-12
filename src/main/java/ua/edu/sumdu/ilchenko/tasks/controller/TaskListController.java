@@ -67,7 +67,6 @@ public class TaskListController implements IController {
      * @param taskListView view for tasks
      */
     public TaskListController(AbstractTaskList taskList, IView actionsWithTaskView, IView taskListView) {
-        logger.info("Creating controller ...");
         this.taskList = taskList;
         this.actionsWithTaskView = actionsWithTaskView;
         this.taskListView = taskListView;
@@ -81,12 +80,11 @@ public class TaskListController implements IController {
      */
     @Override
     public void run() {
-        logger.info("Running controller ...");
         for ( ; ; ) {
             taskListView.printInfo();
             int action = actionsWithTaskView.printInfo();
+            logger.info("Chosen action: " + action);
             if (action == -1) {
-                logger.info("Quitting from the controller ...");
                 break;
             }
             if (controllers.containsKey(action)) {

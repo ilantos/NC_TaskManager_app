@@ -47,6 +47,7 @@ public class ActionsWithTaskView implements IView {
      */
     @Override
     public int printInfo() {
+        logger.info("Showing menu of available actions with task");
         System.out.println("Available actions with task:");
         System.out.println(" 1 | add a new task");
         System.out.println(" 2 | remove one of tasks");

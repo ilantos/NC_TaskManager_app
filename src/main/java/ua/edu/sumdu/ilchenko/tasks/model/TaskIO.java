@@ -25,10 +25,16 @@
 package ua.edu.sumdu.ilchenko.tasks.model;
 
 import com.google.gson.Gson;
+import org.apache.log4j.Logger;
 
 import java.io.*;
 
 public final class TaskIO {
+    /**
+     * Logger.
+     */
+    private static Logger logger = Logger.getLogger(TaskIO.class);
+
     private TaskIO() {
     }
 
@@ -39,13 +45,17 @@ public final class TaskIO {
      */
     public static void read(AbstractTaskList tasks, InputStream in) {
         try (ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(in))) {
+            logger.info("Start reading tasks in binary...");
             int numberTasks = ois.readInt();
             for (int i = 0; i < numberTasks; i++) {
                 tasks.add((Task) ois.readObject());
             }
+            logger.info("Reading tasks successfully ended");
         } catch (ClassNotFoundException e) {
+            logger.error("Some error with reading tasks", e);
             e.printStackTrace();
         } catch (IOException e) {
+            logger.error("Some error with reading tasks", e);
             e.printStackTrace();
         }
     }
@@ -57,6 +67,7 @@ public final class TaskIO {
      */
     public static void read(AbstractTaskList tasks, Reader in) {
         try (BufferedReader br = new BufferedReader(in)) {
+            logger.info("Start reading tasks in json...");
             Gson gson = new Gson();
             String json = br.readLine();
             AbstractTaskList readTasks = gson.fromJson(json,
@@ -64,7 +75,9 @@ public final class TaskIO {
             for (Task task: readTasks) {
                 tasks.add(task);
             }
+            logger.info("Reading tasks successfully ended");
         } catch (IOException e) {
+            logger.error("Some error with reading tasks", e);
             e.printStackTrace();
         }
     }
@@ -77,9 +90,12 @@ public final class TaskIO {
     public static void readBinary(AbstractTaskList tasks, File file) {
         try (FileInputStream fis = new FileInputStream(file)){
             read(tasks, fis);
+            logger.info("Reading tasks from file successfully ended");
         } catch (FileNotFoundException e) {
+            logger.error("Some error with reading tasks", e);
             e.printStackTrace();
         } catch (IOException e) {
+            logger.error("Some error with reading tasks", e);
             e.printStackTrace();
         }
     }
@@ -92,9 +108,12 @@ public final class TaskIO {
     public static void readText(AbstractTaskList tasks, File file) {
         try (FileReader fr = new FileReader(file)) {
             read(tasks, fr);
+            logger.info("Reading tasks from file successfully ended");
         } catch (FileNotFoundException e) {
+            logger.error("Some error with reading tasks", e);
             e.printStackTrace();
         } catch (IOException e) {
+            logger.error("Some error with reading tasks", e);
             e.printStackTrace();
         }
     }
@@ -110,7 +129,9 @@ public final class TaskIO {
             for (Task task: tasks) {
                 bos.writeObject(task);
             }
+            logger.info("Writing tasks successfully ended");
         } catch (IOException e) {
+            logger.error("Some error with writing tasks", e);
             e.printStackTrace();
         }
     }
@@ -125,7 +146,9 @@ public final class TaskIO {
             Gson gson = new Gson();
             String tasksJson = gson.toJson(tasks);
             bw.write(tasksJson);
+            logger.info("Writing tasks successfully ended");
         } catch (IOException e) {
+            logger.error("Some error with writing tasks", e);
             e.printStackTrace();
         }
     }
@@ -138,9 +161,12 @@ public final class TaskIO {
     public static void writeBinary(AbstractTaskList tasks, File file) {
         try (FileOutputStream fos = new FileOutputStream(file)){
             write(tasks, fos);
+            logger.info("Writing tasks in file successfully ended");
         } catch (FileNotFoundException e) {
+            logger.error("Some error with writing tasks", e);
             e.printStackTrace();
         } catch (IOException e) {
+            logger.error("Some error with writing tasks", e);
             e.printStackTrace();
         }
     }
@@ -153,7 +179,9 @@ public final class TaskIO {
     public static void writeText(AbstractTaskList tasks, File file) {
         try (FileWriter fw = new FileWriter(file)) {
             write(tasks, fw);
+            logger.info("Writing tasks in file successfully ended");
         } catch (IOException e) {
+            logger.error("Some error with writing tasks", e);
             e.printStackTrace();
         }
     }

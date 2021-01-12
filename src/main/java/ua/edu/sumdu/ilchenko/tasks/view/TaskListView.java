@@ -55,6 +55,7 @@ public class TaskListView implements IView {
      */
     @Override
     public int printInfo() {
+        logger.info("Showing all tasks");
         System.out.println("Tasks:");
         int i = 1;
         for (Task task: tasks) {

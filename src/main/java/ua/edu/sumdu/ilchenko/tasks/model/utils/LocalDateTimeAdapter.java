@@ -22,39 +22,31 @@
  * SOFTWARE.
  */
 
-package ua.edu.sumdu.ilchenko.tasks.notification;
+package ua.edu.sumdu.ilchenko.tasks.model.utils;
 
-import org.apache.log4j.Logger;
-import ua.edu.sumdu.ilchenko.tasks.model.Task;
+import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
+import com.google.gson.stream.JsonWriter;
 
-import java.awt.*;
-import java.util.Set;
+import java.io.IOException;
+import java.time.LocalDateTime;
 
-public class TrayNotification implements INotification{
-    /**
-     * Logger.
-     */
-    private static Logger logger = Logger.getLogger(TrayNotification.class);
+public class LocalDateTimeAdapter extends TypeAdapter<LocalDateTime> {
 
     @Override
-    public void notify(Set<Task> tasks) {
-        SystemTray tray = SystemTray.getSystemTray();
-        Image image = Toolkit.getDefaultToolkit().createImage("icon.png");
-        TrayIcon trayIcon = new TrayIcon(image, "Tray Demo");
-        trayIcon.setImageAutoSize(true);
-        trayIcon.setToolTip("System tray icon demo");
-        try {
-            tray.add(trayIcon);
-            for (Task task: tasks) {
-                logger.info("Display task in tray: " + task.getTitle());
-                trayIcon.displayMessage(
-                        "You need to execute task!",
-                        task.getTitle(),
-                        TrayIcon.MessageType.INFO);
-            }
-        } catch (AWTException e) {
-            System.out.println("Cannot screen notify");
-            logger.error("Some problems with tray notification", e);
+    public void write(JsonWriter jsonWriter, LocalDateTime time) throws IOException {
+
+    }
+
+    @Override
+    public LocalDateTime read(JsonReader jsonReader) throws IOException {
+        if (jsonReader.peek() == JsonToken.NULL) {
+            jsonReader.nextNull();
+            return null;
         }
+        String str = jsonReader.nextString();
+
+        return null;
     }
 }

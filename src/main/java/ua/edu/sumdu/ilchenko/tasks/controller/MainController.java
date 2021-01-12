@@ -28,9 +28,7 @@ import org.apache.log4j.Logger;
 import ua.edu.sumdu.ilchenko.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.ilchenko.tasks.view.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class MainController implements IController{
@@ -75,19 +73,16 @@ public class MainController implements IController{
      */
     @Override
     public void run() {
-        logger.info("Running controller ...");
         int action = 0;
         for ( ; ; ) {
             action = menuView.printInfo();
-            logger.debug("Action = " + action);
-            if(action == 9) {
-                logger.info("Quitting from the controller ...");
+            logger.info("Action: " + action);
+            if(action == -1) {
                 break;
             }
             if (controllers.containsKey(action)) {
                 controllers.get(action).run();
             } else {
-                //Нужно ли выводить эти данные в контроллере? Или это во вью нужно выводить?
                 System.out.println("You entered not existing activity");
                 logger.warn("Entered not existing activity");
             }

@@ -63,13 +63,13 @@ public class EditTaskController implements IController {
         for ( ; ; ) {
             int actionMenu = editTaskView.printInfo();
             if (actionMenu == -1) {
-                logger.info("Quit from the controller");
                 break;
             }
             if (actionMenu > 0 && actionMenu <= taskList.size()) {
                 int i = 1;
                 for (Task task: taskList) {
                     if (actionMenu == i++) {
+                        logger.info("user choose task for editing: " + task.toString());
                         int action = editTaskView.printInfoChooseEditing();
                         doEditing(task, action);
                         break;
@@ -90,12 +90,15 @@ public class EditTaskController implements IController {
     private void doEditing(Task task, int action) {
         switch (action) {
             case 1:
+                logger.info("User chose editing title");
                 editTaskView.editTitle(task);
                 break;
             case 2:
+                logger.info("User chose editing execution time");
                 editTaskView.editTime(task);
                 break;
             case 3:
+                logger.info("User chose changing status active");
                 editTaskView.editActive(task);
                 break;
             default:

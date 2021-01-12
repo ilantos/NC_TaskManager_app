@@ -50,6 +50,7 @@ public class CreateTaskView implements IView {
      */
     @Override
     public int printInfo() {
+        logger.info("Showing menu for adding task");
         System.out.println();
         System.out.println("-----------------");
         System.out.println("|  Adding task  |");
@@ -61,7 +62,6 @@ public class CreateTaskView implements IView {
 
         int action = 0;
         for ( ; ; ) {
-            logger.info("Reading the action ...");
             System.out.println("--- Choose activity (Enter number of activity) ---");
             try {
                 action = Integer.parseInt(in.readLine());
@@ -70,7 +70,7 @@ public class CreateTaskView implements IView {
                 logger.warn("Entered number is a string", e);
                 System.out.println("You entered not a number");
             } catch (IOException e) {
-                logger.warn("Cannot read from console", e);
+                logger.error("Cannot read from console", e);
                 System.out.println("Cannot read your info :(");
             }
         }
@@ -82,7 +82,6 @@ public class CreateTaskView implements IView {
      * @return entered correct task or null
      */
     public Task getRepeatedTask() {
-        logger.info("Getting a repeated task from user...");
         try {
             System.out.println("Enter the title of task");
             String title = in.readLine();
@@ -111,7 +110,6 @@ public class CreateTaskView implements IView {
      * @return entered correct task or null
      */
     public Task getNonRepeatedTask() {
-        logger.info("Getting a non-repeated task from user...");
         try {
             System.out.println("Enter the title of task");
             String title = in.readLine();
@@ -136,7 +134,6 @@ public class CreateTaskView implements IView {
      * @return entered correct date or null
      */
     private LocalDateTime getDateFromUser() {
-        logger.info("Getting a new date from user...");
         LocalDateTime time = null;
         try {
             System.out.println("Enter a number of the year");

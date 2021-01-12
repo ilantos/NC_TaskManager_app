@@ -28,7 +28,6 @@ import org.apache.log4j.Logger;
 import ua.edu.sumdu.ilchenko.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.ilchenko.tasks.model.Task;
 import ua.edu.sumdu.ilchenko.tasks.view.CreateTaskView;
-import ua.edu.sumdu.ilchenko.tasks.view.IView;
 
 public class CreateTaskController implements IController{
     /**
@@ -61,20 +60,20 @@ public class CreateTaskController implements IController{
      */
     @Override
     public void run() {
-        logger.info("Running controller ...");
         int action;
         for ( ; ; ) {
             Task task = null;
             action = createTaskView.printInfo();
             if (action == -1) {
-                logger.info("Quit from the controller");
                 break;
             }
             switch (action) {
                 case 1:
+                    logger.info("User choose creating non-repeated task");
                     task = createTaskView.getNonRepeatedTask();
                     break;
                 case 2:
+                    logger.info("User choose creating repeated task");
                     task = createTaskView.getRepeatedTask();
                     break;
                 default:

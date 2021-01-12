@@ -24,6 +24,8 @@ SOFTWARE.
  * Provides the classes to create and storage tasks.*/
 package ua.edu.sumdu.ilchenko.tasks.model;
 
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -33,6 +35,10 @@ import java.time.ZoneOffset;
 import java.util.Objects;
 
 public class Task implements Cloneable, Serializable {
+    /**
+     * Logger.
+     */
+    private static Logger logger = Logger.getLogger(Task.class);
 
     /**
      * Serialization marker.
@@ -70,6 +76,7 @@ public class Task implements Cloneable, Serializable {
      */
     public Task(String title, LocalDateTime time) {
         if (time == null) {
+            logger.warn("Task isn't created. Time isn't specified");
             throw new IllegalArgumentException("Time isn't specified");
         }
         this.title = title;
@@ -77,6 +84,7 @@ public class Task implements Cloneable, Serializable {
         this.end = time;
         this.interval = 0;
         this.active = true;
+        logger.info("Task is created: " + this.toString());
     }
 
     /**Ctor. for an inactive and repeated task.
@@ -90,12 +98,15 @@ public class Task implements Cloneable, Serializable {
                 LocalDateTime end,
                 int interval) {
         if (start == null) {
+            logger.warn("Task isn't created. Start time isn't specified");
             throw new IllegalArgumentException("Start time isn't specified");
         }
         if (end == null) {
+            logger.warn("Task isn't created. End time isn't specified");
             throw new IllegalArgumentException("End time isn't specified");
         }
         if (interval < 0) {
+            logger.warn("Task isn't created. Interval < 0");
             throw new IllegalArgumentException("Interval cannot be negative");
         }
         this.title = title;
@@ -103,6 +114,7 @@ public class Task implements Cloneable, Serializable {
         this.end = end;
         this.interval = interval;
         this.active = true;
+        logger.info("Task is created: " + this.toString());
     }
 
     /**
@@ -116,6 +128,7 @@ public class Task implements Cloneable, Serializable {
      * @param title title to set
      */
     public void setTitle(String title) {
+        logger.info("Title of task is changed");
         this.title = title;
     }
 
@@ -130,6 +143,7 @@ public class Task implements Cloneable, Serializable {
      * @param active state of task to set
      */
     public void setActive(boolean active) {
+        logger.info("Active status is changed");
         this.active = active;
     }
 
@@ -148,6 +162,7 @@ public class Task implements Cloneable, Serializable {
      */
     public void setTime(LocalDateTime time) {
         if (time == null) {
+            logger.warn("Task isn't created. Time isn't specified");
             throw new IllegalArgumentException("Time isn't specified");
         }
         if (isRepeated()) {
@@ -155,6 +170,7 @@ public class Task implements Cloneable, Serializable {
         }
         start = time;
         end = time;
+        logger.info("Execution time is changed");
     }
     //</editor-fold>
 
@@ -188,18 +204,22 @@ public class Task implements Cloneable, Serializable {
      * @param interval period of executable task*/
     public void setTime(LocalDateTime start, LocalDateTime end, int interval) {
         if (start == null) {
+            logger.warn("Task isn't created. Start time isn't specified");
             throw new IllegalArgumentException("Start time isn't specified");
         }
         if (end == null) {
+            logger.warn("Task isn't created. End time isn't specified");
             throw new IllegalArgumentException("End time isn't specified");
         }
         if (interval < 0) {
+            logger.warn("Task isn't created. Interval < 0");
             throw new IllegalArgumentException("Interval cannot be negative");
         }
         if (!isRepeated()) {
             this.start = start;
             this.end = end;
             this.interval = interval;
+            logger.info("Time is changed");
         }
     }
     //</editor-fold>
