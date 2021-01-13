@@ -53,10 +53,10 @@ public class MenuView implements IView {
         System.out.println("|   Main menu   |");
         System.out.println("-----------------");
         System.out.println("Available activities:");
-        System.out.println("1 | Add a new task");
-        System.out.println("2 | Show all tasks");
-        System.out.println("3 | Calendar. Show tasks with specific interval");
-        System.out.println("-1 | Quit");
+        System.out.println(" 1 | Add a new task");
+        System.out.println(" 2 | Show all tasks");
+        System.out.println(" 3 | Calendar. Show tasks with specific interval");
+        System.out.println("-1 | Quit and save");
 
         int action = 0;
         for ( ; ; ) {

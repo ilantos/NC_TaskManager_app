@@ -53,5 +53,6 @@ public class Main {
         mainController.run();
 
         TaskIO.writeText(taskList, fileList);
+        System.exit(1);
     }
 }

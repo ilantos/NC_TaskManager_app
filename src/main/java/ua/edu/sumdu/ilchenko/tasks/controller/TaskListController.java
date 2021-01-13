@@ -27,6 +27,7 @@ package ua.edu.sumdu.ilchenko.tasks.controller;
 import org.apache.log4j.Logger;
 import ua.edu.sumdu.ilchenko.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.ilchenko.tasks.view.CreateTaskView;
+import ua.edu.sumdu.ilchenko.tasks.view.EditTaskView;
 import ua.edu.sumdu.ilchenko.tasks.view.IView;
 import ua.edu.sumdu.ilchenko.tasks.view.RemoveTaskView;
 
@@ -73,6 +74,7 @@ public class TaskListController implements IController {
 
         controllers.put(1, new CreateTaskController(taskList, new CreateTaskView()));
         controllers.put(2, new RemoveTaskController(taskList, new RemoveTaskView(taskListView)));
+        controllers.put(3, new EditTaskController(taskList, new EditTaskView(taskListView)));
     }
 
     /**
