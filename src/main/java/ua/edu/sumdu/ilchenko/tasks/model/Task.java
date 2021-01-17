@@ -73,11 +73,17 @@ public class Task implements Cloneable, Serializable {
      * Ctor. for an inactive and non-repeated task.
      * @param title Title of task
      * @param time Executable time of non-repeated task
+     * @throws IllegalArgumentException if time is null or before now
      */
     public Task(String title, LocalDateTime time) {
+        LocalDateTime now = LocalDateTime.now();
         if (time == null) {
             logger.warn("Task isn't created. Time isn't specified");
             throw new IllegalArgumentException("Time isn't specified");
+        }
+        if (time.isBefore(now)) {
+            logger.warn("Task isn't created. Execution time is in the past");
+            throw new IllegalArgumentException("Execution time is in the past");
         }
         this.title = title;
         this.start = time;
@@ -92,18 +98,33 @@ public class Task implements Cloneable, Serializable {
      * @param start start time of interval
      * @param end end time of interval
      * @param interval interval of execution time
+     * @throws IllegalArgumentException if the value of:
+     * <li>
+     *     <ol>start time is null or before now</ol>
+     *     <ol>start time is null or before now</ol>
+     *     <ol>interval < 0</ol>
+     * </li
      */
     public Task(String title,
                 LocalDateTime start,
                 LocalDateTime end,
                 int interval) {
+        LocalDateTime now = LocalDateTime.now();
         if (start == null) {
             logger.warn("Task isn't created. Start time isn't specified");
             throw new IllegalArgumentException("Start time isn't specified");
         }
+        if (start.isBefore(now)) {
+            logger.warn("Task isn't created. Start time is in the past");
+            throw new IllegalArgumentException("Start time is in the past");
+        }
         if (end == null) {
             logger.warn("Task isn't created. End time isn't specified");
             throw new IllegalArgumentException("End time isn't specified");
+        }
+        if (end.isBefore(start)) {
+            logger.warn("Task isn't created. End time cannot be before start time");
+            throw new IllegalArgumentException("End time cannot be before start time");
         }
         if (interval < 0) {
             logger.warn("Task isn't created. Interval < 0");
@@ -159,11 +180,17 @@ public class Task implements Cloneable, Serializable {
     /**
      * @param time execution time of non-repeated task to set.
      * If task is repeated then task is transforming to non-repeated
+     * @throws IllegalArgumentException if time is null or before now
      */
     public void setTime(LocalDateTime time) {
+        LocalDateTime now = LocalDateTime.now();
         if (time == null) {
-            logger.warn("Task isn't created. Time isn't specified");
+            logger.warn("Time of task isn't changed. Time isn't specified");
             throw new IllegalArgumentException("Time isn't specified");
+        }
+        if (time.isBefore(now)) {
+            logger.warn("Time of task isn't changed. Execution time is in the past");
+            throw new IllegalArgumentException("Execution time is in the past");
         }
         if (isRepeated()) {
             interval = 0;
@@ -201,18 +228,34 @@ public class Task implements Cloneable, Serializable {
     /**Setter for repeated task.
      * @param start start time of interval
      * @param end end time of interval
-     * @param interval period of executable task*/
+     * @param interval period of executable task
+     * @throws IllegalArgumentException if the value of:
+     * <li>
+     *     <ol>start time is null or before now</ol>
+     *     <ol>start time is null or before now</ol>
+     *     <ol>interval < 0</ol>
+     * </li>
+     */
     public void setTime(LocalDateTime start, LocalDateTime end, int interval) {
+        LocalDateTime now = LocalDateTime.now();
         if (start == null) {
-            logger.warn("Task isn't created. Start time isn't specified");
+            logger.warn("Task isn't changed. Start time isn't specified");
             throw new IllegalArgumentException("Start time isn't specified");
         }
+        if (start.isBefore(now)) {
+            logger.warn("Task isn't changed. Start time is in the past");
+            throw new IllegalArgumentException("Start time is in the past");
+        }
         if (end == null) {
-            logger.warn("Task isn't created. End time isn't specified");
+            logger.warn("Task isn't changed. End time isn't specified");
             throw new IllegalArgumentException("End time isn't specified");
         }
+        if (end.isBefore(start)) {
+            logger.warn("Task isn't changed. End time cannot be before start time");
+            throw new IllegalArgumentException("End time cannot be before start time");
+        }
         if (interval < 0) {
-            logger.warn("Task isn't created. Interval < 0");
+            logger.warn("Task isn't changed. Interval < 0");
             throw new IllegalArgumentException("Interval cannot be negative");
         }
         if (!isRepeated()) {
