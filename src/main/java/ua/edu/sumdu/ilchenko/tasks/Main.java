@@ -1,10 +1,6 @@
 package ua.edu.sumdu.ilchenko.tasks;
 
-import org.apache.log4j.Logger;
-import ua.edu.sumdu.ilchenko.tasks.controller.CalendarController;
-import ua.edu.sumdu.ilchenko.tasks.controller.EditTaskController;
 import ua.edu.sumdu.ilchenko.tasks.controller.MainController;
-import ua.edu.sumdu.ilchenko.tasks.controller.TaskListController;
 import ua.edu.sumdu.ilchenko.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.ilchenko.tasks.model.ArrayTaskList;
 import ua.edu.sumdu.ilchenko.tasks.model.Task;
@@ -19,7 +15,6 @@ import java.time.LocalDateTime;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("This is a task Manager app");
         AbstractTaskList taskList = new ArrayTaskList();
 
         String pathList = Configuration.PATH_STORE_TASKS;
@@ -50,6 +45,7 @@ public class Main {
         notificationManager.start();
 
         MenuView view = new MenuView();
+        view.printMessage("This is a task manager app");
         MainController mainController = new MainController(taskList, view);
         mainController.run();
 

@@ -29,7 +29,7 @@ import ua.edu.sumdu.ilchenko.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.ilchenko.tasks.utils.Strings;
 import ua.edu.sumdu.ilchenko.tasks.view.CreateTaskView;
 import ua.edu.sumdu.ilchenko.tasks.view.EditTaskView;
-import ua.edu.sumdu.ilchenko.tasks.view.IView;
+import ua.edu.sumdu.ilchenko.tasks.view.View;
 import ua.edu.sumdu.ilchenko.tasks.view.RemoveTaskView;
 
 import java.util.HashMap;
@@ -49,12 +49,12 @@ public class TaskListController implements IController {
     /**
      * Available actions with tasks view.
      */
-    private IView actionsWithTaskView;
+    private View actionsWithTaskView;
 
     /**
      * task list view.
      */
-    private IView taskListView;
+    private View taskListView;
 
     /**
      * Possible using controllers from this controller
@@ -68,7 +68,7 @@ public class TaskListController implements IController {
      * @param actionsWithTaskView available actions with tasks
      * @param taskListView view for tasks
      */
-    public TaskListController(AbstractTaskList taskList, IView actionsWithTaskView, IView taskListView) {
+    public TaskListController(AbstractTaskList taskList, View actionsWithTaskView, View taskListView) {
         this.taskList = taskList;
         this.actionsWithTaskView = actionsWithTaskView;
         this.taskListView = taskListView;

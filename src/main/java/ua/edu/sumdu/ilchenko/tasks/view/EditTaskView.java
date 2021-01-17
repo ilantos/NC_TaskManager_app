@@ -28,33 +28,26 @@ import org.apache.log4j.Logger;
 import ua.edu.sumdu.ilchenko.tasks.model.Task;
 import ua.edu.sumdu.ilchenko.tasks.utils.Strings;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 
-public class EditTaskView implements IView {
+public class EditTaskView extends View {
     /**
      * Logger.
      */
     private static Logger logger = Logger.getLogger(EditTaskView.class);
 
     /**
-     * Console reader.
-     */
-    private BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-
-    /**
      * View for show all tasks.
      */
-    private IView taskListView;
+    private View taskListView;
 
     /**
      * Ctor.
      * @param taskListView view of the task list
      */
-    public EditTaskView(IView taskListView) {
+    public EditTaskView(View taskListView) {
         this.taskListView = taskListView;
     }
 
@@ -71,7 +64,7 @@ public class EditTaskView implements IView {
         System.out.println(" n | n - number of a task for removing");
         System.out.println("-1 | back");
         taskListView.printInfo();
-        return readAction();
+        return readAction(logger);
     }
 
     /**
@@ -84,25 +77,7 @@ public class EditTaskView implements IView {
         System.out.println(" 2 | Edit time");
         System.out.println(" 3 | Edit active");
         System.out.println("-1 | back");
-        return readAction();
-    }
-
-    private int readAction() {
-        int action = 0;
-        for ( ; ; ) {
-            System.out.println(Strings.CHOOSE_ACTIVITY);
-            try {
-                action = Integer.parseInt(in.readLine());
-                break;
-            } catch (NumberFormatException e) {
-                logger.warn(Strings.ISSUE_INPUT_NUMBER, e);
-                System.out.println(Strings.ISSUE_INPUT_NUMBER);
-            } catch (IOException e) {
-                logger.error(Strings.ISSUE_CONSOLE, e);
-                System.out.println(Strings.ISSUE_CONSOLE);
-            }
-        }
-        return action;
+        return readAction(logger);
     }
 
     /**

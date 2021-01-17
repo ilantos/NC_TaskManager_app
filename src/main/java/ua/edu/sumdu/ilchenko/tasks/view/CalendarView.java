@@ -26,26 +26,17 @@ package ua.edu.sumdu.ilchenko.tasks.view;
 
 import org.apache.log4j.Logger;
 import ua.edu.sumdu.ilchenko.tasks.model.Task;
-import ua.edu.sumdu.ilchenko.tasks.utils.Strings;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Set;
 
-public class CalendarView implements IView{
+public class CalendarView extends View {
     /**
      * Logger.
      */
     private static Logger logger = Logger.getLogger(CalendarView.class);
-
-    /**
-     * Console reader.
-     */
-    private BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
     /**
      * Print to console available actions of the calendar.
@@ -59,20 +50,7 @@ public class CalendarView implements IView{
         System.out.println(" 2 | next 7 days");
         System.out.println(" 3 | this month");
         System.out.println("-1 | back");
-        int action;
-        for ( ; ; ) {
-            System.out.println(Strings.CHOOSE_ACTIVITY);
-            try {
-                action = Integer.parseInt(in.readLine());
-                break;
-            } catch (NumberFormatException e) {
-                logger.warn(Strings.ISSUE_INPUT_NUMBER, e);
-                System.out.println(Strings.ISSUE_INPUT_NUMBER);
-            } catch (IOException e) {
-                logger.error(Strings.ISSUE_CONSOLE, e);
-                System.out.println(Strings.ISSUE_CONSOLE);
-            }
-        }
+        int action = readAction(logger);
         return action;
     }
 
@@ -87,7 +65,6 @@ public class CalendarView implements IView{
             LocalDate dateOfTime = time.toLocalDate();
             if (!dateOfTime.equals(day)) {
                 System.out.println(dateOfTime + ":");
-                //i = 1;
             }
             Set<Task> tasks = calendar.get(time);
             for (Task task: tasks) {

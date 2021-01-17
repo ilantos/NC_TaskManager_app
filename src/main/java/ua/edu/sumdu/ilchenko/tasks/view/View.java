@@ -24,20 +24,53 @@
 
 package ua.edu.sumdu.ilchenko.tasks.view;
 
-import java.io.IOException;
+import org.apache.log4j.Logger;
+import ua.edu.sumdu.ilchenko.tasks.utils.Strings;
 
-public interface IView {
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public abstract class View {
+    /**
+     * Console reader.
+     */
+    protected BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+
     /**
      * Print to console some information.
      * @return action that user performed
      */
-    int printInfo();
+    public abstract int printInfo();
 
     /**
      * For print message to console.
      * @param message message
      */
-    default void printMessage(String message){
+    public void printMessage(String message){
         System.out.println(message);
+    }
+
+    /**
+     * Read action of user from console.
+     * @param logger to log activity
+     * @return chosen action
+     */
+    public int readAction(Logger logger) {
+        int action;
+        for ( ; ; ) {
+            System.out.println(Strings.CHOOSE_ACTIVITY);
+            try {
+                action = Integer.parseInt(in.readLine());
+                break;
+            } catch (NumberFormatException e) {
+                logger.warn(Strings.ISSUE_INPUT_NUMBER, e);
+                System.out.println(Strings.ISSUE_INPUT_NUMBER);
+            } catch (IOException e) {
+                logger.error(Strings.ISSUE_CONSOLE, e);
+                System.out.println(Strings.ISSUE_CONSOLE);
+            }
+        }
+        return action;
     }
 }

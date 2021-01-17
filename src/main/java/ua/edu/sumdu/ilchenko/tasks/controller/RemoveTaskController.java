@@ -30,7 +30,7 @@ import ua.edu.sumdu.ilchenko.tasks.model.Task;
 import ua.edu.sumdu.ilchenko.tasks.model.TaskIO;
 import ua.edu.sumdu.ilchenko.tasks.utils.Configuration;
 import ua.edu.sumdu.ilchenko.tasks.utils.Strings;
-import ua.edu.sumdu.ilchenko.tasks.view.IView;
+import ua.edu.sumdu.ilchenko.tasks.view.View;
 
 import java.io.File;
 
@@ -48,14 +48,14 @@ public class RemoveTaskController implements IController {
     /**
      * View for creating task.
      */
-    private IView removeTaskView;
+    private View removeTaskView;
 
     /**
      * Ctor.
      * @param taskList from this task list will be removing a task
      * @param removeTaskView view
      */
-    public RemoveTaskController(AbstractTaskList taskList, IView removeTaskView) {
+    public RemoveTaskController(AbstractTaskList taskList, View removeTaskView) {
         this.taskList = taskList;
         this.removeTaskView = removeTaskView;
     }

@@ -28,22 +28,15 @@ import org.apache.log4j.Logger;
 import ua.edu.sumdu.ilchenko.tasks.model.Task;
 import ua.edu.sumdu.ilchenko.tasks.utils.Strings;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 
-public class CreateTaskView implements IView {
+public class CreateTaskView extends View {
     /**
      * Logger.
      */
     private static Logger logger = Logger.getLogger(CreateTaskView.class);
-
-    /**
-     * Console reader.
-     */
-    private BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
     /**
      * Print to console types of creating task.
@@ -61,21 +54,7 @@ public class CreateTaskView implements IView {
         System.out.println(" 2 | repeated task");
         System.out.println("-1 | cancel");
 
-        int action = 0;
-        for ( ; ; ) {
-            System.out.println(Strings.CHOOSE_ACTIVITY);
-            try {
-                action = Integer.parseInt(in.readLine());
-                break;
-            } catch (NumberFormatException e) {
-                logger.warn(Strings.ISSUE_INPUT_NUMBER, e);
-                System.out.println(Strings.ISSUE_INPUT_NUMBER);
-            } catch (IOException e) {
-                logger.error(Strings.ISSUE_CONSOLE, e);
-                System.out.println(Strings.ISSUE_CONSOLE);
-            }
-        }
-        return action;
+        return readAction(logger);
     }
 
     /**

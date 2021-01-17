@@ -30,7 +30,7 @@ import ua.edu.sumdu.ilchenko.tasks.model.Task;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class TaskListView implements IView {
+public class TaskListView extends View {
     /**
      * Logger.
      */

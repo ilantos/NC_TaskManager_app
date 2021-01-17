@@ -25,22 +25,12 @@
 package ua.edu.sumdu.ilchenko.tasks.view;
 
 import org.apache.log4j.Logger;
-import ua.edu.sumdu.ilchenko.tasks.utils.Strings;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
-public class ActionsWithTaskView implements IView {
+public class ActionsWithTaskView extends View {
     /**
      * Logger.
      */
     private static Logger logger = Logger.getLogger(ActionsWithTaskView.class);
-
-    /**
-     * Console reader.
-     */
-    private BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
     /**
      * Print to console available actions with tasks.
@@ -54,20 +44,7 @@ public class ActionsWithTaskView implements IView {
         System.out.println(" 2 | remove one of tasks");
         System.out.println(" 3 | edit one of tasks");
         System.out.println("-1 | back");
-        int action;
-        for ( ; ; ) {
-            System.out.println(Strings.CHOOSE_ACTIVITY);
-            try {
-                action = Integer.parseInt(in.readLine());
-                break;
-            } catch (NumberFormatException e) {
-                logger.warn(Strings.ISSUE_INPUT_NUMBER, e);
-                System.out.println(Strings.ISSUE_INPUT_NUMBER);
-            } catch (IOException e) {
-                logger.error(Strings.ISSUE_CONSOLE, e);
-                System.out.println(Strings.ISSUE_CONSOLE);
-            }
-        }
-        return action;
+        return readAction(logger);
     }
+
 }

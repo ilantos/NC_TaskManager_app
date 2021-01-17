@@ -46,7 +46,7 @@ public class MainController implements IController{
     /**
      * Main menu view.
      */
-    private IView menuView;
+    private View menuView;
 
     /**
      * Possible using controllers from this controller.
@@ -57,7 +57,7 @@ public class MainController implements IController{
     /**
      * Ctor.
      */
-    public MainController(AbstractTaskList taskList, IView menuView) {
+    public MainController(AbstractTaskList taskList, View menuView) {
         this.taskList = taskList;
         this.menuView = menuView;
 
