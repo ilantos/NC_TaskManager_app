@@ -29,6 +29,7 @@ import ua.edu.sumdu.ilchenko.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.ilchenko.tasks.model.Task;
 import ua.edu.sumdu.ilchenko.tasks.model.TaskIO;
 import ua.edu.sumdu.ilchenko.tasks.utils.Configuration;
+import ua.edu.sumdu.ilchenko.tasks.utils.Strings;
 import ua.edu.sumdu.ilchenko.tasks.view.EditTaskView;
 
 import java.io.File;
@@ -82,8 +83,8 @@ public class EditTaskController implements IController {
                     }
                 }
             } else {
-                System.out.println("You chose an incorrect number of task");
-                logger.warn("Entered not existing activity");
+                editTaskView.printMessage(Strings.NOT_EXISTING_ACTIVITY);
+                logger.warn(Strings.NOT_EXISTING_ACTIVITY);
             }
         }
     }
@@ -110,8 +111,8 @@ public class EditTaskController implements IController {
                 result = editTaskView.editActive(task);
                 break;
             default:
-                System.out.println("You chose an incorrect activity");
-                logger.warn("Entered not existing activity");
+                editTaskView.printMessage(Strings.NOT_EXISTING_ACTIVITY);
+                logger.warn(Strings.NOT_EXISTING_ACTIVITY);
         }
         return result;
     }

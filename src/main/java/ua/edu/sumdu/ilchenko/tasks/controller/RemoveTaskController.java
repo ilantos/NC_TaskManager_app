@@ -29,6 +29,7 @@ import ua.edu.sumdu.ilchenko.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.ilchenko.tasks.model.Task;
 import ua.edu.sumdu.ilchenko.tasks.model.TaskIO;
 import ua.edu.sumdu.ilchenko.tasks.utils.Configuration;
+import ua.edu.sumdu.ilchenko.tasks.utils.Strings;
 import ua.edu.sumdu.ilchenko.tasks.view.IView;
 
 import java.io.File;
@@ -82,8 +83,8 @@ public class RemoveTaskController implements IController {
                     }
                 }
             } else {
-                System.out.println("You chose an incorrect number of task");
-                logger.warn("Entered not existing activity");
+                removeTaskView.printMessage(Strings.NOT_EXISTING_ACTIVITY);
+                logger.warn(Strings.NOT_EXISTING_ACTIVITY);
             }
         }
     }

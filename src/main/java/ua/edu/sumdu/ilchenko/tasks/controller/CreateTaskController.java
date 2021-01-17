@@ -29,6 +29,7 @@ import ua.edu.sumdu.ilchenko.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.ilchenko.tasks.model.Task;
 import ua.edu.sumdu.ilchenko.tasks.model.TaskIO;
 import ua.edu.sumdu.ilchenko.tasks.utils.Configuration;
+import ua.edu.sumdu.ilchenko.tasks.utils.Strings;
 import ua.edu.sumdu.ilchenko.tasks.view.CreateTaskView;
 
 import java.io.File;
@@ -81,13 +82,13 @@ public class CreateTaskController implements IController{
                     task = createTaskView.getRepeatedTask();
                     break;
                 default:
-                    System.out.println("You entered not existing activity");
-                    logger.warn("Entered not existing activity");
+                    createTaskView.printMessage(Strings.NOT_EXISTING_ACTIVITY);
+                    logger.warn(Strings.NOT_EXISTING_ACTIVITY);
             }
             if (task != null) {
                 taskList.add(task);
                 TaskIO.writeText(taskList, new File(Configuration.PATH_STORE_TASKS));
-                System.out.println("!!!Task added successfully!!!");
+                createTaskView.printMessage("Task added successfully!");
             }
         }
     }

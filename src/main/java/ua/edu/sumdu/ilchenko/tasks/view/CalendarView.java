@@ -26,7 +26,7 @@ package ua.edu.sumdu.ilchenko.tasks.view;
 
 import org.apache.log4j.Logger;
 import ua.edu.sumdu.ilchenko.tasks.model.Task;
-import ua.edu.sumdu.ilchenko.tasks.view.utils.StringsView;
+import ua.edu.sumdu.ilchenko.tasks.utils.Strings;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -61,16 +61,16 @@ public class CalendarView implements IView{
         System.out.println("-1 | back");
         int action;
         for ( ; ; ) {
-            System.out.println(StringsView.CHOOSE_ACTIVITY);
+            System.out.println(Strings.CHOOSE_ACTIVITY);
             try {
                 action = Integer.parseInt(in.readLine());
                 break;
             } catch (NumberFormatException e) {
-                logger.warn(StringsView.ISSUE_INPUT_NUMBER, e);
-                System.out.println(StringsView.ISSUE_INPUT_NUMBER);
+                logger.warn(Strings.ISSUE_INPUT_NUMBER, e);
+                System.out.println(Strings.ISSUE_INPUT_NUMBER);
             } catch (IOException e) {
-                logger.error(StringsView.ISSUE_CONSOLE, e);
-                System.out.println(StringsView.ISSUE_CONSOLE);
+                logger.error(Strings.ISSUE_CONSOLE, e);
+                System.out.println(Strings.ISSUE_CONSOLE);
             }
         }
         return action;

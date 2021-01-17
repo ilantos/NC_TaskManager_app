@@ -26,6 +26,7 @@ package ua.edu.sumdu.ilchenko.tasks.controller;
 
 import org.apache.log4j.Logger;
 import ua.edu.sumdu.ilchenko.tasks.model.AbstractTaskList;
+import ua.edu.sumdu.ilchenko.tasks.utils.Strings;
 import ua.edu.sumdu.ilchenko.tasks.view.*;
 
 import java.util.HashMap;
@@ -83,8 +84,8 @@ public class MainController implements IController{
             if (controllers.containsKey(action)) {
                 controllers.get(action).run();
             } else {
-                System.out.println("You entered not existing activity");
-                logger.warn("Entered not existing activity");
+                menuView.printMessage(Strings.NOT_EXISTING_ACTIVITY);
+                logger.warn(Strings.NOT_EXISTING_ACTIVITY);
             }
         }
     }

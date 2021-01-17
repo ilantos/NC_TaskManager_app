@@ -28,6 +28,7 @@ import org.apache.log4j.Logger;
 import ua.edu.sumdu.ilchenko.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.ilchenko.tasks.model.Task;
 import ua.edu.sumdu.ilchenko.tasks.model.Tasks;
+import ua.edu.sumdu.ilchenko.tasks.utils.Strings;
 import ua.edu.sumdu.ilchenko.tasks.view.CalendarView;
 
 import java.time.LocalDate;
@@ -87,8 +88,8 @@ public class CalendarController implements IController{
                     calendarView.printCalendar(getMonthTasks());
                     break;
                 default:
-                    System.out.println("You entered not existing activity");
-                    logger.warn("Entered not existing activity");
+                    calendarView.printMessage(Strings.NOT_EXISTING_ACTIVITY);
+                    logger.warn(Strings.NOT_EXISTING_ACTIVITY);
             }
         }
     }

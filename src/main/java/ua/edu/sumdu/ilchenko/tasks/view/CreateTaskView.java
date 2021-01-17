@@ -26,7 +26,7 @@ package ua.edu.sumdu.ilchenko.tasks.view;
 
 import org.apache.log4j.Logger;
 import ua.edu.sumdu.ilchenko.tasks.model.Task;
-import ua.edu.sumdu.ilchenko.tasks.view.utils.StringsView;
+import ua.edu.sumdu.ilchenko.tasks.utils.Strings;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -63,16 +63,16 @@ public class CreateTaskView implements IView {
 
         int action = 0;
         for ( ; ; ) {
-            System.out.println(StringsView.CHOOSE_ACTIVITY);
+            System.out.println(Strings.CHOOSE_ACTIVITY);
             try {
                 action = Integer.parseInt(in.readLine());
                 break;
             } catch (NumberFormatException e) {
-                logger.warn(StringsView.ISSUE_INPUT_NUMBER, e);
-                System.out.println(StringsView.ISSUE_INPUT_NUMBER);
+                logger.warn(Strings.ISSUE_INPUT_NUMBER, e);
+                System.out.println(Strings.ISSUE_INPUT_NUMBER);
             } catch (IOException e) {
-                logger.error(StringsView.ISSUE_CONSOLE, e);
-                System.out.println(StringsView.ISSUE_CONSOLE);
+                logger.error(Strings.ISSUE_CONSOLE, e);
+                System.out.println(Strings.ISSUE_CONSOLE);
             }
         }
         return action;
@@ -94,14 +94,14 @@ public class CreateTaskView implements IView {
             int interval = Integer.parseInt(in.readLine());
             return new Task(title, startTime, endTime, interval);
         } catch (NumberFormatException e) {
-            logger.warn(StringsView.ISSUE_INPUT_NUMBER, e);
-            System.out.println(StringsView.ISSUE_INPUT_NUMBER);
+            logger.warn(Strings.ISSUE_INPUT_NUMBER, e);
+            System.out.println(Strings.ISSUE_INPUT_NUMBER);
         } catch (IllegalArgumentException e) {
             logger.warn(e.getMessage(), e);
             System.out.println(e.getMessage());
         } catch (IOException e) {
-            logger.error(StringsView.ISSUE_CONSOLE, e);
-            System.out.println(StringsView.ISSUE_CONSOLE);
+            logger.error(Strings.ISSUE_CONSOLE, e);
+            System.out.println(Strings.ISSUE_CONSOLE);
         }
         return null;
     }
@@ -118,14 +118,14 @@ public class CreateTaskView implements IView {
             LocalDateTime executionTime = getDateFromUser();
             return new Task(title, executionTime);
         } catch (NumberFormatException e) {
-            logger.warn(StringsView.ISSUE_INPUT_NUMBER, e);
-            System.out.println(StringsView.ISSUE_INPUT_NUMBER);
+            logger.warn(Strings.ISSUE_INPUT_NUMBER, e);
+            System.out.println(Strings.ISSUE_INPUT_NUMBER);
         } catch (IllegalArgumentException e) {
             logger.warn(e.getMessage(), e);
             System.out.println(e.getMessage());
         } catch (IOException e) {
-            logger.error(StringsView.ISSUE_CONSOLE, e);
-            System.out.println(StringsView.ISSUE_CONSOLE);
+            logger.error(Strings.ISSUE_CONSOLE, e);
+            System.out.println(Strings.ISSUE_CONSOLE);
         }
         return null;
     }
@@ -149,14 +149,14 @@ public class CreateTaskView implements IView {
             int minute = Integer.parseInt(in.readLine());
             time = LocalDateTime.of(year, month, day, hour, minute);
         } catch (NumberFormatException e) {
-            logger.warn(StringsView.ISSUE_INPUT_NUMBER, e);
-            System.out.println(StringsView.ISSUE_INPUT_NUMBER);
+            logger.warn(Strings.ISSUE_INPUT_NUMBER, e);
+            System.out.println(Strings.ISSUE_INPUT_NUMBER);
         } catch (DateTimeException e) {
             logger.warn(e.getMessage(), e);
             System.out.println(e.getMessage());
         } catch (IOException e) {
-            logger.error(StringsView.ISSUE_CONSOLE, e);
-            System.out.println(StringsView.ISSUE_CONSOLE);
+            logger.error(Strings.ISSUE_CONSOLE, e);
+            System.out.println(Strings.ISSUE_CONSOLE);
         }
         return time;
     }

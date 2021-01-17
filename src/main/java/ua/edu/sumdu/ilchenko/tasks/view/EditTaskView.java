@@ -26,7 +26,7 @@ package ua.edu.sumdu.ilchenko.tasks.view;
 
 import org.apache.log4j.Logger;
 import ua.edu.sumdu.ilchenko.tasks.model.Task;
-import ua.edu.sumdu.ilchenko.tasks.view.utils.StringsView;
+import ua.edu.sumdu.ilchenko.tasks.utils.Strings;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -90,16 +90,16 @@ public class EditTaskView implements IView {
     private int readAction() {
         int action = 0;
         for ( ; ; ) {
-            System.out.println(StringsView.CHOOSE_ACTIVITY);
+            System.out.println(Strings.CHOOSE_ACTIVITY);
             try {
                 action = Integer.parseInt(in.readLine());
                 break;
             } catch (NumberFormatException e) {
-                logger.warn(StringsView.ISSUE_INPUT_NUMBER, e);
-                System.out.println(StringsView.ISSUE_INPUT_NUMBER);
+                logger.warn(Strings.ISSUE_INPUT_NUMBER, e);
+                System.out.println(Strings.ISSUE_INPUT_NUMBER);
             } catch (IOException e) {
-                logger.error(StringsView.ISSUE_CONSOLE, e);
-                System.out.println(StringsView.ISSUE_CONSOLE);
+                logger.error(Strings.ISSUE_CONSOLE, e);
+                System.out.println(Strings.ISSUE_CONSOLE);
             }
         }
         return action;
@@ -118,8 +118,8 @@ public class EditTaskView implements IView {
             System.out.println("Task successfully changed!");
             return true;
         } catch (IOException e) {
-            logger.error(StringsView.ISSUE_CONSOLE, e);
-            System.out.println(StringsView.ISSUE_CONSOLE);
+            logger.error(Strings.ISSUE_CONSOLE, e);
+            System.out.println(Strings.ISSUE_CONSOLE);
         }
         return false;
     }
@@ -151,12 +151,12 @@ public class EditTaskView implements IView {
                 System.out.println("Task successfully changed!");
                 return true;
             } catch (NumberFormatException e) {
-                logger.warn(StringsView.ISSUE_INPUT_NUMBER, e);
-                System.out.println(StringsView.ISSUE_INPUT_NUMBER);
+                logger.warn(Strings.ISSUE_INPUT_NUMBER, e);
+                System.out.println(Strings.ISSUE_INPUT_NUMBER);
                 System.out.println("The task isn't changed!");
             } catch (IOException e) {
-                logger.error(StringsView.ISSUE_CONSOLE, e);
-                System.out.println(StringsView.ISSUE_CONSOLE);
+                logger.error(Strings.ISSUE_CONSOLE, e);
+                System.out.println(Strings.ISSUE_CONSOLE);
             }
         } else {
             System.out.println("Set execution time");
@@ -192,8 +192,8 @@ public class EditTaskView implements IView {
                 System.out.println("Active status isn't changed");
             }
         } catch (IOException e) {
-            logger.error(StringsView.ISSUE_CONSOLE, e);
-            System.out.println(StringsView.ISSUE_CONSOLE);
+            logger.error(Strings.ISSUE_CONSOLE, e);
+            System.out.println(Strings.ISSUE_CONSOLE);
         }
         return false;
     }
@@ -218,14 +218,14 @@ public class EditTaskView implements IView {
             int minute = Integer.parseInt(in.readLine());
             time = LocalDateTime.of(year, month, day, hour, minute);
         } catch (NumberFormatException e) {
-            logger.warn(StringsView.ISSUE_INPUT_NUMBER, e);
-            System.out.println(StringsView.ISSUE_INPUT_NUMBER);
+            logger.warn(Strings.ISSUE_INPUT_NUMBER, e);
+            System.out.println(Strings.ISSUE_INPUT_NUMBER);
         } catch (DateTimeException e) {
             logger.warn(e.getMessage(), e);
             System.out.println(e.getMessage());
         } catch (IOException e) {
-            logger.error(StringsView.ISSUE_CONSOLE, e);
-            System.out.println(StringsView.ISSUE_CONSOLE);
+            logger.error(Strings.ISSUE_CONSOLE, e);
+            System.out.println(Strings.ISSUE_CONSOLE);
         }
         return time;
     }

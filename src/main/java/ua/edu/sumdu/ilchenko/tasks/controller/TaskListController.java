@@ -26,6 +26,7 @@ package ua.edu.sumdu.ilchenko.tasks.controller;
 
 import org.apache.log4j.Logger;
 import ua.edu.sumdu.ilchenko.tasks.model.AbstractTaskList;
+import ua.edu.sumdu.ilchenko.tasks.utils.Strings;
 import ua.edu.sumdu.ilchenko.tasks.view.CreateTaskView;
 import ua.edu.sumdu.ilchenko.tasks.view.EditTaskView;
 import ua.edu.sumdu.ilchenko.tasks.view.IView;
@@ -92,9 +93,8 @@ public class TaskListController implements IController {
             if (controllers.containsKey(action)) {
                 controllers.get(action).run();
             } else {
-                //Нужно ли выводить эти данные в контроллере? Или это во вью нужно выводить?
-                System.out.println("You entered not existing activity");
-                logger.warn("Entered not existing activity");
+                taskListView.printMessage(Strings.NOT_EXISTING_ACTIVITY);
+                logger.warn(Strings.NOT_EXISTING_ACTIVITY);
             }
         }
     }

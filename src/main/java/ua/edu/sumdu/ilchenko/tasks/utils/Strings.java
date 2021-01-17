@@ -22,15 +22,13 @@
  * SOFTWARE.
  */
 
-package ua.edu.sumdu.ilchenko.tasks.view.utils;
+package ua.edu.sumdu.ilchenko.tasks.utils;
 
-public class StringsView {
+public class Strings {
     public static final String ISSUE_CONSOLE = "Cannot read from console";
     public static final String ISSUE_INPUT_NUMBER = "Entered number is a string";
-
     public static final String EDITED_SUCCESSFULLY = "Task successfully changed";
     public static final String EDITED_UNSUCCESSFULLY = "The task isn't changed";
-
-
     public static final String CHOOSE_ACTIVITY = "* Choose activity (Enter number of activity) *";
+    public static final String NOT_EXISTING_ACTIVITY = "Entered not existing activity";
 }

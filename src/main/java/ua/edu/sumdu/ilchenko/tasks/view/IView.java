@@ -32,4 +32,12 @@ public interface IView {
      * @return action that user performed
      */
     int printInfo();
+
+    /**
+     * For print message to console.
+     * @param message message
+     */
+    default void printMessage(String message){
+        System.out.println(message);
+    }
 }
