@@ -26,6 +26,7 @@ package ua.edu.sumdu.ilchenko.tasks.view;
 
 import org.apache.log4j.Logger;
 import ua.edu.sumdu.ilchenko.tasks.model.Task;
+import ua.edu.sumdu.ilchenko.tasks.view.utils.StringsView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -89,17 +90,16 @@ public class EditTaskView implements IView {
     private int readAction() {
         int action = 0;
         for ( ; ; ) {
-            logger.info("Reading the action ...");
-            System.out.println("--- Choose activity (Enter number of activity) ---");
+            System.out.println(StringsView.CHOOSE_ACTIVITY);
             try {
                 action = Integer.parseInt(in.readLine());
                 break;
             } catch (NumberFormatException e) {
-                logger.warn("Entered number is a string", e);
-                System.out.println("You entered not a number");
+                logger.warn(StringsView.ISSUE_INPUT_NUMBER, e);
+                System.out.println(StringsView.ISSUE_INPUT_NUMBER);
             } catch (IOException e) {
-                logger.warn("Cannot read from console", e);
-                System.out.println("Cannot read your info :(");
+                logger.error(StringsView.ISSUE_CONSOLE, e);
+                System.out.println(StringsView.ISSUE_CONSOLE);
             }
         }
         return action;
@@ -116,8 +116,8 @@ public class EditTaskView implements IView {
             task.setTitle(title);
             System.out.println("Task successfully changed!");
         } catch (IOException e) {
-            logger.error("Cannot read from console", e);
-            System.out.println("Cannot read your info :(");
+            logger.error(StringsView.ISSUE_CONSOLE, e);
+            System.out.println(StringsView.ISSUE_CONSOLE);
         }
     }
 
@@ -146,12 +146,12 @@ public class EditTaskView implements IView {
                 task.setTime(start, end, interval);
                 System.out.println("Task successfully changed!");
             } catch (NumberFormatException e) {
-                logger.warn("Entered number is a string", e);
-                System.out.println("You entered not a number");
+                logger.warn(StringsView.ISSUE_INPUT_NUMBER, e);
+                System.out.println(StringsView.ISSUE_INPUT_NUMBER);
                 System.out.println("The task isn't changed!");
             } catch (IOException e) {
-                logger.error("Cannot read from console", e);
-                System.out.println("Cannot read your info :(");
+                logger.error(StringsView.ISSUE_CONSOLE, e);
+                System.out.println(StringsView.ISSUE_CONSOLE);
             }
         } else {
             System.out.println("Set execution time");
@@ -183,8 +183,8 @@ public class EditTaskView implements IView {
                 System.out.println("Active status isn't changed");
             }
         } catch (IOException e) {
-            logger.error("Cannot read from console", e);
-            System.out.println("Cannot read your info :(");
+            logger.error(StringsView.ISSUE_CONSOLE, e);
+            System.out.println(StringsView.ISSUE_CONSOLE);
         }
     }
 
@@ -208,14 +208,14 @@ public class EditTaskView implements IView {
             int minute = Integer.parseInt(in.readLine());
             time = LocalDateTime.of(year, month, day, hour, minute);
         } catch (NumberFormatException e) {
-            logger.warn("Entered number is a string", e);
-            System.out.println("You entered not a number");
+            logger.warn(StringsView.ISSUE_INPUT_NUMBER, e);
+            System.out.println(StringsView.ISSUE_INPUT_NUMBER);
         } catch (DateTimeException e) {
             logger.warn(e.getMessage(), e);
             System.out.println(e.getMessage());
         } catch (IOException e) {
-            logger.error("Cannot read from console", e);
-            System.out.println("Cannot read your info :(");
+            logger.error(StringsView.ISSUE_CONSOLE, e);
+            System.out.println(StringsView.ISSUE_CONSOLE);
         }
         return time;
     }

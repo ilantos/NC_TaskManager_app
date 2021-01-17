@@ -25,6 +25,7 @@
 package ua.edu.sumdu.ilchenko.tasks.view;
 
 import org.apache.log4j.Logger;
+import ua.edu.sumdu.ilchenko.tasks.view.utils.StringsView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -71,16 +72,16 @@ public class RemoveTaskView implements IView {
 
         int action = 0;
         for ( ; ; ) {
-            System.out.println("--- Enter a number of task for removing ---");
+            System.out.println(StringsView.CHOOSE_ACTIVITY);
             try {
                 action = Integer.parseInt(in.readLine());
                 break;
             } catch (NumberFormatException e) {
-                logger.warn("Entered number is a string", e);
-                System.out.println("You entered not a number");
+                logger.warn(StringsView.ISSUE_INPUT_NUMBER, e);
+                System.out.println(StringsView.ISSUE_INPUT_NUMBER);
             } catch (IOException e) {
-                logger.error("Cannot read from console", e);
-                System.out.println("Cannot read your info :(");
+                logger.error(StringsView.ISSUE_CONSOLE, e);
+                System.out.println(StringsView.ISSUE_CONSOLE);
             }
         }
         return action;
