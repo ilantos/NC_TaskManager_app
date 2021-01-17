@@ -27,7 +27,11 @@ package ua.edu.sumdu.ilchenko.tasks.controller;
 import org.apache.log4j.Logger;
 import ua.edu.sumdu.ilchenko.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.ilchenko.tasks.model.Task;
+import ua.edu.sumdu.ilchenko.tasks.model.TaskIO;
+import ua.edu.sumdu.ilchenko.tasks.utils.Configuration;
 import ua.edu.sumdu.ilchenko.tasks.view.EditTaskView;
+
+import java.io.File;
 
 public class EditTaskController implements IController {
     /**
@@ -71,7 +75,9 @@ public class EditTaskController implements IController {
                     if (actionMenu == i++) {
                         logger.info("user choose task for editing: " + task.toString());
                         int action = editTaskView.printInfoChooseEditing();
-                        doEditing(task, action);
+                        if (doEditing(task, action)) {
+                            TaskIO.writeText(taskList, new File(Configuration.PATH_STORE_TASKS));
+                        }
                         break;
                     }
                 }
@@ -86,24 +92,27 @@ public class EditTaskController implements IController {
      * Do editing the task.
      * @param task task for editing
      * @param action specified part of task for editing
+     * @return successful or unsuccessful result of editing
      */
-    private void doEditing(Task task, int action) {
+    private boolean doEditing(Task task, int action) {
+        boolean result = false;
         switch (action) {
             case 1:
                 logger.info("User chose editing title");
-                editTaskView.editTitle(task);
+                result = editTaskView.editTitle(task);
                 break;
             case 2:
                 logger.info("User chose editing execution time");
-                editTaskView.editTime(task);
+                result = editTaskView.editTime(task);
                 break;
             case 3:
                 logger.info("User chose changing status active");
-                editTaskView.editActive(task);
+                result = editTaskView.editActive(task);
                 break;
             default:
                 System.out.println("You chose an incorrect activity");
                 logger.warn("Entered not existing activity");
         }
+        return result;
     }
 }

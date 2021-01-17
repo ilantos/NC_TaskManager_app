@@ -27,7 +27,11 @@ package ua.edu.sumdu.ilchenko.tasks.controller;
 import org.apache.log4j.Logger;
 import ua.edu.sumdu.ilchenko.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.ilchenko.tasks.model.Task;
+import ua.edu.sumdu.ilchenko.tasks.model.TaskIO;
+import ua.edu.sumdu.ilchenko.tasks.utils.Configuration;
 import ua.edu.sumdu.ilchenko.tasks.view.IView;
+
+import java.io.File;
 
 public class RemoveTaskController implements IController {
     /**
@@ -71,7 +75,9 @@ public class RemoveTaskController implements IController {
                 for (Task task: taskList) {
                     if (action == i++) {
                         logger.info("Task for removing:" + task.toString());
-                        taskList.remove(task);
+                        if (taskList.remove(task)) {
+                            TaskIO.writeText(taskList, new File(Configuration.PATH_STORE_TASKS));
+                        }
                         break;
                     }
                 }

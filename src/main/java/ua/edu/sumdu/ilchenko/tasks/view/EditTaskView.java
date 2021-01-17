@@ -108,43 +108,48 @@ public class EditTaskView implements IView {
     /**
      * Edit title of the task.
      * @param task editing task
+     * @return successful or unsuccessful result of editing
      */
-    public void editTitle(Task task) {
+    public boolean editTitle(Task task) {
         try {
             System.out.println("Enter the title of task");
             String title = in.readLine();
             task.setTitle(title);
             System.out.println("Task successfully changed!");
+            return true;
         } catch (IOException e) {
             logger.error(StringsView.ISSUE_CONSOLE, e);
             System.out.println(StringsView.ISSUE_CONSOLE);
         }
+        return false;
     }
 
     /**
      * Edit time of the task.
      * @param task editing task
+     * @return successful or unsuccessful result of editing
      */
-    public void editTime(Task task) {
+    public boolean editTime(Task task) {
         logger.info("Setting time...");
         if (task.isRepeated()) {
             System.out.println("Set start time of interval");
             LocalDateTime start = getDateFromUser();
             if (start == null) {
                 System.out.println("The task isn't changed!");
-                return;
+                return false;
             }
             System.out.println("Set end time of interval");
             LocalDateTime end = getDateFromUser();
             if (end == null) {
                 System.out.println("The task isn't changed!");
-                return;
+                return false;
             }
             try {
                 System.out.println("Set interval");
                 int interval = Integer.parseInt(in.readLine());
                 task.setTime(start, end, interval);
                 System.out.println("Task successfully changed!");
+                return true;
             } catch (NumberFormatException e) {
                 logger.warn(StringsView.ISSUE_INPUT_NUMBER, e);
                 System.out.println(StringsView.ISSUE_INPUT_NUMBER);
@@ -159,18 +164,21 @@ public class EditTaskView implements IView {
             if (executionTime != null) {
                 task.setTime(executionTime);
                 System.out.println("Task successfully changed!");
+                return true;
             } else {
                 System.out.println("The task isn't changed");
                 logger.info("Time isn't changed");
             }
         }
+        return false;
     }
 
     /**
      * Edit active status of the task.
      * @param task editing task
+     * @return successful or unsuccessful result of editing
      */
-    public void editActive(Task task) {
+    public boolean editActive(Task task) {
         System.out.println("Actual status of task active is "
                 + task.isActive());
         System.out.println("If you want to change status write \"yes\"");
@@ -179,6 +187,7 @@ public class EditTaskView implements IView {
             if (answer.equals("yes")) {
                 task.setActive(!task.isActive());
                 System.out.println("Active status is changed successfully!");
+                return true;
             } else {
                 System.out.println("Active status isn't changed");
             }
@@ -186,6 +195,7 @@ public class EditTaskView implements IView {
             logger.error(StringsView.ISSUE_CONSOLE, e);
             System.out.println(StringsView.ISSUE_CONSOLE);
         }
+        return false;
     }
 
     /**

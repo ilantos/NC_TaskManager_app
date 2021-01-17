@@ -27,7 +27,11 @@ package ua.edu.sumdu.ilchenko.tasks.controller;
 import org.apache.log4j.Logger;
 import ua.edu.sumdu.ilchenko.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.ilchenko.tasks.model.Task;
+import ua.edu.sumdu.ilchenko.tasks.model.TaskIO;
+import ua.edu.sumdu.ilchenko.tasks.utils.Configuration;
 import ua.edu.sumdu.ilchenko.tasks.view.CreateTaskView;
+
+import java.io.File;
 
 public class CreateTaskController implements IController{
     /**
@@ -82,6 +86,7 @@ public class CreateTaskController implements IController{
             }
             if (task != null) {
                 taskList.add(task);
+                TaskIO.writeText(taskList, new File(Configuration.PATH_STORE_TASKS));
                 System.out.println("!!!Task added successfully!!!");
             }
         }

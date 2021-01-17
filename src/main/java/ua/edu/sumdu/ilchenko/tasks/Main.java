@@ -11,6 +11,7 @@ import ua.edu.sumdu.ilchenko.tasks.model.Task;
 import ua.edu.sumdu.ilchenko.tasks.model.TaskIO;
 import ua.edu.sumdu.ilchenko.tasks.notification.NotificationManager;
 import ua.edu.sumdu.ilchenko.tasks.notification.TrayNotification;
+import ua.edu.sumdu.ilchenko.tasks.utils.Configuration;
 import ua.edu.sumdu.ilchenko.tasks.view.*;
 
 import java.io.*;
@@ -21,7 +22,7 @@ public class Main {
         System.out.println("This is a task Manager app");
         AbstractTaskList taskList = new ArrayTaskList();
 
-        String pathList = "list.json";
+        String pathList = Configuration.PATH_STORE_TASKS;
         File fileList = new File(pathList);
         LocalDateTime now = LocalDateTime.now();
         if(!fileList.exists()) {
@@ -52,7 +53,6 @@ public class Main {
         MainController mainController = new MainController(taskList, view);
         mainController.run();
 
-        TaskIO.writeText(taskList, fileList);
         System.exit(1);
     }
 }

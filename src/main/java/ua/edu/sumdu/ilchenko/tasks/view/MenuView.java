@@ -57,7 +57,7 @@ public class MenuView implements IView {
         System.out.println(" 1 | Add a new task");
         System.out.println(" 2 | Show all tasks");
         System.out.println(" 3 | Calendar. Show tasks with specific interval");
-        System.out.println("-1 | Quit and save");
+        System.out.println("-1 | Quit");
 
         int action = 0;
         for ( ; ; ) {
